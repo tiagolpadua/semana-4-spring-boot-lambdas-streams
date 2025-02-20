@@ -18,7 +18,7 @@ public class Main {
     private Scanner scanner = new Scanner(System.in);
     private RepositorioDePedidos repositorioDePedidos = new RepositorioDePedidos();
 
-    public static void main(String[] args) throws Exception {
+    public static void xmain(String[] args) throws Exception {
         Main main = new Main();
         main.executa();
     }
