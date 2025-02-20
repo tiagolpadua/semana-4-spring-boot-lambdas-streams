@@ -1,25 +1,35 @@
 package br.com.alura.clientelo;
 
-import br.com.alura.clientelo.arquivo.*;
-import br.com.alura.clientelo.pedido.Pedido;
 import br.com.alura.clientelo.pedido.RepositorioDePedidos;
 import br.com.alura.clientelo.relatorio.RelatorioSintetico;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
-public class Main {
+@SpringBootApplication
+public class ClienteloApplication implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClienteloApplication.class);
 
     private Scanner scanner = new Scanner(System.in);
-    private RepositorioDePedidos repositorioDePedidos = new RepositorioDePedidos();
+
+    @Autowired
+    private RepositorioDePedidos repositorioDePedidos;
+//    private RepositorioDePedidos repositorioDePedidos = new RepositorioDePedidos();
 
     public static void main(String[] args) throws Exception {
-        Main main = new Main();
+        SpringApplication.run(ClienteloApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("Executando a aplicação...");
+        ClienteloApplication main = new ClienteloApplication();
         main.executa();
     }
 
@@ -104,6 +114,5 @@ public class Main {
     private void excluirPedido() {
 
     }
-
 }
 
