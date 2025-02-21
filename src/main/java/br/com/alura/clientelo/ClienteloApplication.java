@@ -1,29 +1,36 @@
 package br.com.alura.clientelo;
 
-import br.com.alura.clientelo.arquivo.*;
-import br.com.alura.clientelo.pedido.Pedido;
 import br.com.alura.clientelo.pedido.RepositorioDePedidos;
+import br.com.alura.clientelo.relatorio.RelatorioProdutosMaisVendidos;
 import br.com.alura.clientelo.relatorio.RelatorioSintetico;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.CommandLineRunner;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
-public class Main {
+@SpringBootApplication
+public class ClienteloApplication implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClienteloApplication.class);
 
-    private Scanner scanner = new Scanner(System.in);
-    private RepositorioDePedidos repositorioDePedidos = new RepositorioDePedidos();
+    @Autowired
+    private Scanner scanner;
+//    private Scanner scanner = new Scanner(System.in);
+
+    @Autowired
+    private RepositorioDePedidos repositorioDePedidos;
+//    private RepositorioDePedidos repositorioDePedidos = new RepositorioDePedidos();
 
     public static void main(String[] args) throws Exception {
-        Main main = new Main();
-        main.executa();
+        SpringApplication.run(ClienteloApplication.class, args);
     }
 
-    private void executa() {
+    @Override
+    public void run(String... args) throws Exception {
         String banner = """
                    ██████╗██╗     ██╗███████╗███╗   ██╗████████╗███████╗██╗      ██████╗
                   ██╔════╝██║     ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝██║     ██╔═══██╗
@@ -63,6 +70,7 @@ public class Main {
 
             switch (opcaoDoMenu) {
                 case 1 -> exibeRelatorioSintetico();
+                case 2 -> exibeProdutosMaisVendidos();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -78,7 +86,7 @@ public class Main {
     }
 
     private void exibeProdutosMaisVendidos() {
-
+        RelatorioProdutosMaisVendidos.geraRelatorio(repositorioDePedidos.listaTodos());
     }
 
     private void exibeVendasPorCategoria() {
@@ -104,6 +112,5 @@ public class Main {
     private void excluirPedido() {
 
     }
-
 }
 

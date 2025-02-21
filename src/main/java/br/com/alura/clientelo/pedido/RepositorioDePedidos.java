@@ -2,10 +2,12 @@ package br.com.alura.clientelo.pedido;
 
 import br.com.alura.clientelo.arquivo.ExtratorDeCsv;
 import br.com.alura.clientelo.arquivo.ProcessadorDeArquivo;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class RepositorioDePedidos {
 
     private static final List<Pedido> pedidos = new ArrayList<>();
