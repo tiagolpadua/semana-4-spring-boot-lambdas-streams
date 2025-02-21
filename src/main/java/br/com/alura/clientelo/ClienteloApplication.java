@@ -1,6 +1,7 @@
 package br.com.alura.clientelo;
 
 import br.com.alura.clientelo.pedido.RepositorioDePedidos;
+import br.com.alura.clientelo.relatorio.RelatorioProdutosMaisVendidos;
 import br.com.alura.clientelo.relatorio.RelatorioSintetico;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Scanner;
 
@@ -16,7 +18,9 @@ public class ClienteloApplication implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(ClienteloApplication.class);
 
-    private Scanner scanner = new Scanner(System.in);
+    @Autowired
+    private Scanner scanner;
+//    private Scanner scanner = new Scanner(System.in);
 
     @Autowired
     private RepositorioDePedidos repositorioDePedidos;
@@ -29,11 +33,6 @@ public class ClienteloApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Executando a aplicação...");
-        ClienteloApplication main = new ClienteloApplication();
-        main.executa();
-    }
-
-    private void executa() {
         String banner = """
                    ██████╗██╗     ██╗███████╗███╗   ██╗████████╗███████╗██╗      ██████╗
                   ██╔════╝██║     ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝██║     ██╔═══██╗
@@ -73,6 +72,7 @@ public class ClienteloApplication implements CommandLineRunner {
 
             switch (opcaoDoMenu) {
                 case 1 -> exibeRelatorioSintetico();
+                case 2 -> exibeProdutosMaisVendidos();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -83,12 +83,12 @@ public class ClienteloApplication implements CommandLineRunner {
     }
 
     private void exibeRelatorioSintetico() {
-        RelatorioSintetico relatorioSintetico = RelatorioSintetico.geraRelatorio(repositorioDePedidos.listaTodos());
+        var relatorioSintetico = RelatorioSintetico.geraRelatorio(repositorioDePedidos.listaTodos());
         relatorioSintetico.exibir();
     }
 
     private void exibeProdutosMaisVendidos() {
-
+        RelatorioProdutosMaisVendidos.geraRelatorio(repositorioDePedidos.listaTodos());
     }
 
     private void exibeVendasPorCategoria() {
