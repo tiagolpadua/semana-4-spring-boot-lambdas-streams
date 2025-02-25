@@ -13,10 +13,10 @@ public class RelatorioProdutosMaisVendidos {
 
     public static void geraRelatorio(List<Pedido> pedidos) {
         // chave: String / valor: Integer
-        var produtosAgrupados = pedidos.stream()
+        var mapaVendasPorProduto = pedidos.stream()
                 .collect(Collectors.groupingBy(Pedido::getProduto, Collectors.summingInt(Pedido::getQuantidade)));
 
-        produtosAgrupados
+        mapaVendasPorProduto
             .entrySet()
             .stream()
             .sorted(Comparator.comparing(Map.Entry::getValue, Comparator.reverseOrder()))

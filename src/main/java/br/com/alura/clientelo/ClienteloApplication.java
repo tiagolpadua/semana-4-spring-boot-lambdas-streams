@@ -1,8 +1,10 @@
 package br.com.alura.clientelo;
 
 import br.com.alura.clientelo.pedido.RepositorioDePedidos;
+import br.com.alura.clientelo.relatorio.RelatorioProdutoMaisCarosPorCategoria;
 import br.com.alura.clientelo.relatorio.RelatorioProdutosMaisVendidos;
 import br.com.alura.clientelo.relatorio.RelatorioSintetico;
+import br.com.alura.clientelo.relatorio.RelatorioVendasPorCategoria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,8 @@ public class ClienteloApplication implements CommandLineRunner {
             switch (opcaoDoMenu) {
                 case 1 -> exibeRelatorioSintetico();
                 case 2 -> exibeProdutosMaisVendidos();
+                case 3 -> exibeVendasPorCategoria();
+                case 4 -> exibeProdutosMaisCarosPorCategoria();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -90,11 +94,11 @@ public class ClienteloApplication implements CommandLineRunner {
     }
 
     private void exibeVendasPorCategoria() {
-
+        RelatorioVendasPorCategoria.geraRelatorio(repositorioDePedidos.listaTodos());
     }
 
     private void exibeProdutosMaisCarosPorCategoria() {
-
+        RelatorioProdutoMaisCarosPorCategoria.geraRelatorio(repositorioDePedidos.listaTodos());
     }
 
     private void exibeClientesMaisFieis() {
